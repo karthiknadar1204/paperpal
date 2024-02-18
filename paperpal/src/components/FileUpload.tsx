@@ -2,6 +2,7 @@
 import React from 'react'
 import { Inbox, Loader2 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
+import { uploadToS3 } from '@/lib/s3';
 const FileUpload = () => {
 
     const { getRootProps, getInputProps } = useDropzone({
@@ -15,6 +16,15 @@ const FileUpload = () => {
               toast.error("File too large");
               return;
             }
+            try {
+                const data=await uploadToS3(file);
+                console.log("data",data);
+                
+            } catch (error) {
+                console.log("error",error);
+                
+            }
+
         }
     });
   return (
